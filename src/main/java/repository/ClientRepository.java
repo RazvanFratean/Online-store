@@ -144,12 +144,12 @@ public class ClientRepository {
 
     }
 
-    public List<Produs> getProdus(String denumireProdus) throws SQLException {
+    public List<Produs> getProdusByDenumire(String denumire) throws SQLException {
         List<Produs> produse = new ArrayList<>();
         Connection con = MySqlCon.getConnection();
         Statement stm = con.createStatement();
         try {
-            ResultSet resultSet = stm.executeQuery("select * from produs where denumire= " + denumireProdus);
+            ResultSet resultSet = stm.executeQuery("select * from produs where denumire= '" + denumire + "'");
             while (resultSet.next()) {
                 Statement statement1 = con.createStatement();
                 ResultSet resultSet1 = statement1.executeQuery("select * from categorie where id= " + resultSet.getInt(2));
@@ -168,6 +168,35 @@ public class ClientRepository {
                 ));
             }
         } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return produse;
+    }
+
+    public List<Produs> getProdusByCategorie(int idCategorie) {
+        List<Produs> produse = new ArrayList<>();
+        Connection con = MySqlCon.getConnection();
+        try{
+        Statement stm = con.createStatement();
+        ResultSet resultSet = stm.executeQuery("select * from produs where id_categorie=" + idCategorie);
+        while (resultSet.next()){
+            Statement statement1 = con.createStatement();
+            ResultSet resultSet1 = statement1.executeQuery("select * from categorie where id= " + resultSet.getInt(2));
+            Categorie categorie = new Categorie();
+            if (resultSet1.next()) {
+                categorie.setId(resultSet1.getInt(1));
+                categorie.setDenumire(resultSet1.getString(2));
+            }
+            produse.add(new Produs(
+                    resultSet.getInt("id"),
+                    categorie,
+                    resultSet.getString("denumire"),
+                    resultSet.getInt("pret"),
+                    resultSet.getInt("stoc"),
+                    resultSet.getDate("garantie")
+            ));
+        }
+        } catch (SQLException ex){
             ex.printStackTrace();
         }
         return produse;

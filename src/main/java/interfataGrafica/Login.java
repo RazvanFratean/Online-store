@@ -19,7 +19,7 @@ public class Login extends JFrame implements ActionListener{
     JPasswordField password_text;
     JButton submit;
     ClientRepository rep = new ClientRepository();
-    TabelProduse graficaAdmin = new TabelProduse();
+
 
     Login() throws SQLException {
     }
@@ -30,17 +30,19 @@ public class Login extends JFrame implements ActionListener{
         String userName = userName_text.getText();
         String password = password_text.getText();
 
+//        String user = userType_text.getToolTipText();
+
         try {
             Users user = rep.getUserName(userName);
 
             if (user!= null) {
                     if (userName.equals(user.getUsername()) && password.equals(user.getParola()) && user.getTipUser().equals("admin")){
                         message.setText(" Bine ati venit  " + userName + "");
-                        graficaAdmin.createTable();
+                        new InterfataAdmin();
                         return;
                     } else if (userName.equals(user.getUsername()) && password.equals(user.getParola()) && user.getTipUser().equals("client")){
                         message.setText(" Bine ati venit  " + userName + "");
-                        graficaAdmin.createTable();
+                        new InterfataClient();
                         return;
                     } else {
                         message.setText(" Invalid user.");
@@ -61,8 +63,6 @@ public class Login extends JFrame implements ActionListener{
         userType = new JLabel();
         userType.setText("User Type :");
         userType_text = new JComboBox(users);
-//        userType.setSelectedIndex(1);
-//        userType.addActionListener();
         // Username Label
         user_label = new JLabel();
         user_label.setText("User Name :");
@@ -75,8 +75,8 @@ public class Login extends JFrame implements ActionListener{
         submit = new JButton("SUBMIT");
         panel = new JPanel(new GridLayout(5, 1));
         panel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        panel.setMaximumSize(new Dimension(500, 100));
-        panel.setBackground(Color.yellow);
+        panel.setMaximumSize(new Dimension(500, 150));
+        panel.setBackground(Color.gray);
         panel.add(userType);
         panel.add(userType_text);
         panel.add(user_label);

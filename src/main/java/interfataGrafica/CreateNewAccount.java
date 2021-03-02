@@ -20,7 +20,6 @@ public class CreateNewAccount implements ActionListener {
     private JLabel numeLabel, prenumeLabel, dataNasterii, message;
     private JTextField numeLabel_text, prenumeLabel_text, dataNasterii_text;
     private JPanel panel;
-    private JButton createAccount;
 
     public CreateNewAccount() {
 
@@ -65,6 +64,7 @@ public class CreateNewAccount implements ActionListener {
                 }
             }
         });
+        createAccount.setText("Create new account !");
         panel.add(createAccount);
         frame.add(panel, BorderLayout.CENTER);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

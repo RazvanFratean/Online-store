@@ -20,9 +20,15 @@ public class ServiciiClient {
         }
         return true;
     }
-    public List<Produs> searchProduct(String denumire) throws SQLException {
-        List<Produs> produse = rep.getProdus(denumire);
+    public List<Produs> searchProductByDenumire(String denumire) throws SQLException {
+        List<Produs> produse = rep.getProdusByDenumire(denumire);
           return produse;
     }
+    public List<Produs> searchProductByCategorie(int idCategorie) throws SQLException {
+        List<Produs> produse = rep.getProdusByCategorie(idCategorie);
+        return produse;
+    }
 
+    // logica o punem in servicii - in repository facem query in baza de date si apoi folosim datele in servicii
+    //unde ..
 }
